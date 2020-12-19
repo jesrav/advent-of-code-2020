@@ -30,9 +30,8 @@ class PaswordEntry:
         ]
         first_number_right = self.first_number in character_indexes_starting_at_1
         second_number_right = self.last_number in character_indexes_starting_at_1
-        correct_answer = (
-                (first_number_right and not second_number_right)
-                or (not first_number_right and second_number_right)
+        correct_answer = (first_number_right and not second_number_right) or (
+            not first_number_right and second_number_right
         )
         return correct_answer
 
