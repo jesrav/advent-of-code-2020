@@ -26,7 +26,7 @@ def get_n_let_summing_to_2020(integer_list: List[int], n) -> Tuple[int, int]:
 
 def get_answer(integer_list: List[int], n):
     n_let = get_n_let_summing_to_2020(integer_list, n)
-    return reduce(lambda x, y: x*y, n_let)
+    return reduce(lambda x, y: x * y, n_let)
 
 
 def main():
@@ -46,10 +46,9 @@ test_input = [
     299,
     675,
     1456,
- ]
+]
 assert get_answer(test_input, 2) == 514579
 assert get_answer(test_input, 3) == 241861950
 
 if __name__ == "__main__":
     main()
-
