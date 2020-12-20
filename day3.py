@@ -27,13 +27,13 @@ def position_is_tree(row_list, position) -> bool:
 
 
 def get_positions(
-    start_position: np.array, step_vector: np.array, n_steps: int
+    start_position: np.array, step_vector: np.array, n_rows: int
 ) -> List[np.array]:
     position = start_position
-    positions = []
-    for step in range(n_steps):
-        positions.append(position)
+    positions = [start_position]
+    while position[0] + step_vector[0] < n_rows:
         position = position + step_vector
+        positions.append(position)
 
     return positions
 
@@ -51,14 +51,14 @@ def get_answer_part_1(parsed_input, step_vector):
     positions = get_positions(
         start_position=np.array([0, 0]),
         step_vector=step_vector,
-        n_steps=len(parsed_input)
+        n_rows=len(parsed_input)
     )
     return get_tree_sum(positions, parsed_input)
 
 
 def get_answer_part_2(parsed_input, step_vectors):
     tree_counts = [
-        get_answer_part_1(parsed_input, step_vectors[4])
+        get_answer_part_1(parsed_input, step_vector)
         for step_vector in step_vectors
     ]
     return reduce(lambda x, y: x * y, tree_counts)
