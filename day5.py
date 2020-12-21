@@ -38,14 +38,24 @@ def get_seat_id(boardingpass: str) -> int:
     return 8*row_number + col_number
 
 
-def get_max_seat_id(boardingpasses: List[str]) -> int:
-    return max([get_seat_id(b) for b in boardingpasses])
+def get_seat_ids(boardingpasses: List[str]) -> List[int]:
+    return [get_seat_id(b) for b in boardingpasses]
+
+
+def get_my_seat_id(boardingpasses: List[str]) -> int:
+    seat_ids = get_seat_ids(boardingpasses)
+    seat_ids_sorted = sorted(seat_ids)
+    all_seats = list(range(seat_ids_sorted[0], seat_ids_sorted[-1] + 1))
+    my_seat = list(set(all_seats) - set(seat_ids))[0]
+    return my_seat
 
 
 def main():
     INPUT_PATH = Path("data/day5.txt")
     input = get_data(INPUT_PATH)
-    print(f"Answer part 1: {get_max_seat_id(input)}")
+    print(f"Answer part 1: {max(get_seat_ids(input))}")
+    print(f"Answer part 2: {get_my_seat_id(input)}")
+
 
 ##################################################################
 # Tests
