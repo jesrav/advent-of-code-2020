@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Optional, Dict
+from typing import List, Optional
 import re
+
 
 @dataclass
 class PassportEntry:
@@ -54,20 +55,22 @@ class PassportEntry:
         fist_digit_index = char_is_digit_list.index(True)
         if fist_digit_index != 0:
             return False
-        last_digit_index = len(char_is_digit_list) -1 - char_is_digit_list[::-1].index(True)
+        last_digit_index = (
+            len(char_is_digit_list) - 1 - char_is_digit_list[::-1].index(True)
+        )
         if not all(char_is_digit_list[fist_digit_index:last_digit_index]):
             return False
 
-        digits = self.hgt[:last_digit_index + 1]
-        measure = self.hgt[last_digit_index + 1:]
-        if measure not in ["cm", 'in']:
+        digits = self.hgt[: last_digit_index + 1]
+        measure = self.hgt[last_digit_index + 1 :]
+        if measure not in ["cm", "in"]:
             return False
-        if measure == 'cm':
+        if measure == "cm":
             if not 150 <= int(digits) <= 193:
                 return False
             else:
                 return True
-        if measure == 'in':
+        if measure == "in":
             if not 59 <= int(digits) <= 76:
                 return False
             else:
@@ -89,7 +92,7 @@ class PassportEntry:
     def pid_id_valid(self):
         only_digits = all([c.isdigit() for c in self.pid])
         has_nine_digits = len(self.pid) == 9
-        return (only_digits and has_nine_digits)
+        return only_digits and has_nine_digits
 
     def is_valid(self):
         return (
@@ -133,10 +136,7 @@ def parse_input(input_string: str) -> List[PassportEntry]:
         passport_entries_parsed.append(passport_dict)
 
     # Convert list of dictionaries to list of PassportEntry's
-    return [
-        PassportEntry(**passport_dict)
-        for passport_dict in passport_entries_parsed
-    ]
+    return [PassportEntry(**passport_dict) for passport_dict in passport_entries_parsed]
 
 
 def main():
@@ -147,6 +147,7 @@ def main():
     print(f"Asnwer part 1: {part1_sum}")
     part2_sum = sum([pe.all_fields_present() and pe.is_valid() for pe in parsed_input])
     print(f"Asnwer part 1: {part2_sum}")
+
 
 ##################################################################
 # Tests
@@ -177,7 +178,10 @@ assert invalid_hcl.hcl_is_valid() == False
 INPUT_TEST_PART2_PATH = Path("data/day4_test_part2.txt")
 input_test_part_2 = get_data(INPUT_TEST_PART2_PATH)
 parsed_input_test_part_2 = parse_input(input_test_part_2)
-assert sum([pe.all_fields_present() and pe.is_valid() for pe in parsed_input_test_part_2]) == 4
+assert (
+    sum([pe.all_fields_present() and pe.is_valid() for pe in parsed_input_test_part_2])
+    == 4
+)
 
 
 if __name__ == "__main__":

@@ -41,9 +41,7 @@ def get_positions(
 def get_tree_sum(positions, parsed_input):
     tree_sum = 0
     for position in positions:
-        tree_sum += 1 * position_is_tree(
-            parsed_input[position[0]], position[1]
-        )
+        tree_sum += 1 * position_is_tree(parsed_input[position[0]], position[1])
     return tree_sum
 
 
@@ -51,15 +49,14 @@ def get_answer_part_1(parsed_input, step_vector):
     positions = get_positions(
         start_position=np.array([0, 0]),
         step_vector=step_vector,
-        n_rows=len(parsed_input)
+        n_rows=len(parsed_input),
     )
     return get_tree_sum(positions, parsed_input)
 
 
 def get_answer_part_2(parsed_input, step_vectors):
     tree_counts = [
-        get_answer_part_1(parsed_input, step_vector)
-        for step_vector in step_vectors
+        get_answer_part_1(parsed_input, step_vector) for step_vector in step_vectors
     ]
     return reduce(lambda x, y: x * y, tree_counts)
 

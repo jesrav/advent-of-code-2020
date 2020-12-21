@@ -3,6 +3,7 @@ from typing import List
 
 import numpy as np
 
+
 def get_data(filename: Path) -> List[str]:
     with open(filename, "r") as f:
         data = f.readlines()
@@ -21,11 +22,11 @@ def binary_partition(ordered_list, in_higher_partition_list):
 
 
 def get_front_back_partitioning_list(s: str) -> List[bool]:
-    return [c == 'B' for c in s[:7]]
+    return [c == "B" for c in s[:7]]
 
 
 def get_right_left_partitioning_list(s: str) -> List[bool]:
-    return [c == 'R' for c in s[7:]]
+    return [c == "R" for c in s[7:]]
 
 
 def get_seat_id(boardingpass: str) -> int:
@@ -35,7 +36,7 @@ def get_seat_id(boardingpass: str) -> int:
     right_left_partitioning_list = get_right_left_partitioning_list(boardingpass)
     row_number = binary_partition(row_list, front_back_partitioning_list)
     col_number = binary_partition(col_list, right_left_partitioning_list)
-    return 8*row_number + col_number
+    return 8 * row_number + col_number
 
 
 def get_seat_ids(boardingpasses: List[str]) -> List[int]:
