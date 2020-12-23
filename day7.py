@@ -51,6 +51,18 @@ def does_bags_contain_bag(bag_dict, start_bags, needed_bag):
         return does_bags_contain_bag(bag_dict, next_level_bags, needed_bag)
 
 
+def count_bags(bag_dict, start_bags, start_count):
+    if all([bool(bag_dict[start_bag]) is False for start_bag in start_bags]):
+        return start_count
+    else:
+        next_level_bags = [
+            int(count)*[bag] for start_bag in start_bags for bag, count in bag_dict[start_bag].items()
+        ]
+        next_level_bags_flat = [item for sublist in next_level_bags for item in sublist]
+        count = sum([int(val) for start_bag in start_bags for val in bag_dict[start_bag].values()]) + start_count
+        return count_bags(bag_dict, next_level_bags_flat, start_count=count)
+
+
 def main():
     INPUT_PATH = Path("data/day7.txt")
     input = get_data(INPUT_PATH)
@@ -61,7 +73,9 @@ def main():
             for start_bag in bag_dict.keys()
         ]
     )
+    answer_part_2 = count_bags(bag_dict, ["shiny gold bag"], 0)
     print(f"Answer part 1: {answer_part_1}")
+    print(f"Answer part 2: {answer_part_2}")
 
 
 ##################################################################
@@ -79,7 +93,7 @@ assert (
     )
     == 4
 )
-
+assert count_bags(test_bag_dict, ["shiny gold bag"], 0) == 32
 
 if __name__ == "__main__":
     main()
