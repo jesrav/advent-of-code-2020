@@ -1,8 +1,6 @@
 from pathlib import Path
 from typing import List, Dict
 
-accumulator = 0
-
 
 def get_data(filename: Path) -> List[str]:
     with open(filename, "r") as f:
@@ -43,7 +41,7 @@ def get_actions_dict(input):
     parsed_input = [s.strip() for s in input]
     actions_dict = {}
     for i, row_input in enumerate(parsed_input):
-        actions_dict[i] = {"action": row_input.split(" ")[0], "count": int(row_input.split(" ")[1])}
+        actions_dict[i + 1] = {"action": row_input.split(" ")[0], "count": int(row_input.split(" ")[1])}
     return actions_dict
 
 
