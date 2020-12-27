@@ -3,7 +3,7 @@ from typing import List
 from itertools import combinations
 
 
-def get_data(filename: Path) -> List[str]:
+def get_data(filename: Path) -> List[int]:
     with open(filename, "r") as f:
         data = f.readlines()
     data = [int(s.strip()) for s in data]
